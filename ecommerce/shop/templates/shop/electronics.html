@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block title %}Electronics{% endblock %}
+{% block content %}
+    {% load staticfiles %}
+
+    <!--================Home Banner Area =================-->
+    <section class="banner_area">
+        <div class="banner_inner d-flex align-items-center">
+            <div class="container">
+                <div class="banner_content text-center">
+                    <h2>Shop Category Page</h2>
+                    <div class="page_link">
+                        <a href="{% url 'shop:index' %}">Home</a>
+                        <a href="#">Electronics</a>
+                        {#                        <a href="category.html">Women Fashion</a>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Home Banner Area =================-->
+    <!--================Feature Product Area =================-->
+    <section class="feature_product_area section_gap">
+        <div class="main_box">
+            <div class="container-fluid">
+                {% regroup products by category as products_by_category %}
+                {% for c in products_by_category %}
+                    <div class="row">
+                        <div class="main_title">
+                            <h2>{{ c.grouper }}</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        {% for product in c.list %}
+                            <div class="col col1">
+                                <div class="f_p_item">
+                                    <div class="f_p_img">
+                                        <a href="{% url 'shop:detail' product.category product.subcategory product.id %}">
+                                            <img
+                                                    class="img-fluid mt-5"
+                                                    src="{{ product.image.url }}"
+                                                    alt=""></a>
+                                    </div>
+                                    <a href="{% url 'shop:detail' product.category product.subcategory product.id %}">
+                                        <h4>{{ product.name }}</h4>
+                                    </a>
+                                    <h5>{{ product.price }}</h5>
+                                    <div class="mt-2">
+                                         <a href="{% url 'shop:detail' product.category product.subcategory product.id %}">
+                                        <button class="btn btn-primary">Add to Cart</button>
+                                    </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="row mb-lg-5 mt-lg-5">
+                        <nav class="cat_page mx-auto" aria-label="Page navigation example">
+                            <ul class="pagination">
+                                {% if p.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page1">
+                                            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ p.previous_page_number }}">
+                                            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% for num in p.paginator.page_range %}
+                                    {% if p.number == num %}
+                                        <li class="page-item active">
+                                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                        </li>
+                                    {% elif num > p.number|add:'-3' and num < p.number|add:'3' %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if p.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ p.next_page_number }}">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ p.paginator.num_pages }}">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                            </ul>
+                        </nav>
+                    </div>
+                    </div>
+                {% endfor %}
+        </div>
+    </section>
+    <!--================End Feature Product Area =================-->
+{% endblock %}
+

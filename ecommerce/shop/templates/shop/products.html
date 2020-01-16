@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Products Page{% endblock %}
+{% block content %}
+    <section class="cat_product_area section_gap">
+        <div class="container-fluid">
+            <div class="row flex-row-reverse">
+                <div class="col-lg-9">
+                    <div class="latest_product_inner row">
+                        {% for product in product %}
+                            <div class="col-lg-3 col-md-3 col-sm-6">
+                                <div class="f_p_item">
+                                    <div class="f_p_img">
+                                        <a href="{% url 'shop:detail' product.category product.subcategory product.id %}"><img
+                                                class="img-fluid" src="{{ product.image.url }}" alt=""></a>
+                                    </div>
+                                    <a href="{% url 'shop:detail' product.category product.subcategory product.id %}">
+                                        <h4>{{ product.name }}</h4>
+                                    </a>
+                                    <h5>Rs.{{ product.price }}</h5>
+                                    <a href="{% url 'shop:detail' product.category product.subcategory product.id %}">
+                                        <button class="btn btn-primary">Add to Cart</button>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% block title %}
+    {% if  category %}
+        {{ category.name }}
+    {% else %}
+        Category Page
+    {% endif %}
+{% endblock %}
+{% block content %}
+    {% load static %}
+
+    <!--================Home Banner Area =================-->
+    <section class="banner_area" >
+        <div class="banner_inner d-flex align-items-center">
+            <div class="container">
+                <div class="banner_content text-center">
+                    <h2>Shop Category Page</h2>
+                    <div class="page_link">
+                        <a href="{% url 'shop:index' %}">Home</a>
+                        <a href="#">Category</a>
+                        {#                        <a href="category.html">Women Fashion</a>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Home Banner Area =================-->
+
+    <!--================Category Product Area =================-->
+    <section class="cat_product_area section_gap">
+        <div class="container-fluid">
+            <div class="row flex-row-reverse">
+                <div class="col-lg-9">
+                    <div class="latest_product_inner row">
+                        {% for product in products %}
+                            <div class="col-lg-3 col-md-3 col-sm-6">
+                                <div class="f_p_item">
+                                    <div class="f_p_img">
+                                        <a href="{% url 'shop:detail' product.category product.subcategory product.id %}"><img
+                                                class="img-fluid" src="{{ product.image.url }}" alt=""></a>
+                                    </div>
+                                    <a href="{% url 'shop:detail' product.category product.subcategory product.id %}">
+                                        <h4>{{ product.name }}</h4>
+                                    </a>
+                                    <h5>Rs.{{ product.price }}</h5>
+                                    <a href="{% url 'shop:detail' product.category product.subcategory product.id %}">
+                                        <button class="btn btn-primary">Add to Cart</button>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="left_sidebar_area">
+                        <aside class="left_widgets cat_widgets">
+                            <div class="l_w_title">
+                                <h3>Categories</h3>
+                            </div>
+                            <div class="widgets_inner">
+                                <ul class="list">
+                                    <li {% if not category %} class="active"{% endif %}><a href="{% url 'shop:shop' %}">All</a>
+                                    </li>
+                                    {% for c in categories %}
+                                        <li {% if category.slug == c.slug %} class="active"{% endif %}>
+                                            <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-lg-5">
+                <nav class="cat_page mx-auto" aria-label="Page navigation example">
+                    <ul class="pagination">
+                        {% if p.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page1">
+                                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ p.previous_page_number }}">
+                                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% for num in p.paginator.page_range %}
+                            {% if p.number == num %}
+                                <li class="page-item active">
+                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% elif num > p.number|add:'-3' and num < p.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if p.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ p.next_page_number }}">
+                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ p.paginator.num_pages }}">
+                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+    <!--================End Category Product Area =================-->
+{% endblock %}

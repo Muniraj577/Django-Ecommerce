@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block title %} Checkout Page {% endblock %}
+{% block content %}
+    <!--================Home Banner Area =================-->
+    <section class="banner_area">
+        <div class="banner_inner d-flex align-items-center">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="banner_content text-center">
+                    <h2>Product Checkout</h2>
+                    <div class="page_link">
+                        <a href="{% url 'shop:index' %}">Home</a>
+                        <a href="{% url 'checkout:order_create' %}">Checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Home Banner Area =================-->
+
+    <!--================Checkout Area =================-->
+    <section class="checkout_area section_gap">
+        <div class="container">
+            <div class="billing_details">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h3>Checkout</h3>
+{#                        <form action="." method="post" class="row contact_form" novalidate="novalidate">#}
+{#                            {% csrf_token %}#}
+{#                            <div class="col-md-6 form-group">#}
+{#                                {{ form.as_p }}#}
+{#                                <input type="submit" class="btn btn-primary" value="Proceed to Checkout">#}
+{#                            </div>#}
+{#                        </form>#}
+                        <form class="row contact_form" action="." method="post" novalidate="novalidate">
+                            {% csrf_token %}
+							<div class="col-md-6 form-group p_star">
+								<input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name">
+
+							</div>
+							<div class="col-md-6 form-group p_star">
+								<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name">
+
+							</div>
+                            <div class="col-md-12 form-group p_star">
+								<input type="text" class="form-control" id="email" name="email" placeholder="Email Address">
+
+							</div>
+                            <div class="col-md-6 form-group p_star">
+								<input type="text" class="form-control" id="country" name="country" placeholder="Country">
+
+							</div>
+                            <div class="col-md-6 form-group p_star">
+								<input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Phone Number">
+
+							</div>
+{#							<div class="col-md-12 form-group p_star">#}
+{#								<select class="country_select">#}
+{#									<option value="1">Country</option>#}
+{#									<option value="2">Country</option>#}
+{#									<option value="4">Country</option>#}
+{#								</select>#}
+{#							</div>#}
+							<div class="col-md-12 form-group p_star">
+								<input type="text" class="form-control" id="address" name="address" placeholder="Address">
+							</div>
+{#							<div class="col-md-12 form-group p_star">#}
+{#								<input type="text" class="form-control" id="add2" name="add2">#}
+{#							</div>#}
+							<div class="col-md-12 form-group p_star">
+								<input type="text" class="form-control" id="city" name="city" placeholder="Town/City">
+
+							</div>
+
+							<div class="col-md-12 form-group">
+								<input type="text" class="form-control" id="postal_code" name="postal_code" placeholder="Postcode/ZIP">
+							</div>
+                             <input type="submit" class="btn btn-primary" value="Proceed to Checkout">
+						</form>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="order_box">
+                            <h2>Your Order</h2>
+                                <ul class="list">
+                                    <li>
+                                        <a href="#">Product
+                                            <span>Total</span>
+                                        </a>
+                                    </li>
+                                     {% for item in cart %}
+                                    <li>
+                                        <a href="#">{{ item.product.name }}
+                                            <span class="middle">x {{ item.quantity }}</span>
+{#                                            <span class="last"> {{ item.quantity }}*{{ item.product.name }}</span>#}
+                                            <span class="last">Rs. {{ item.total_price }}</span>
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            <ul class="list list_2">
+                                <li>
+                                    <a href="#">Total
+                                        <span>Rs. {{ cart.get_total_price }}</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Checkout Area =================-->
+{% endblock %}

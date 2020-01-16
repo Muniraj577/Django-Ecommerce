@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Search Page{% endblock %}
+{% block content %}
+    {% load staticfiles %}
+
+    <!--================Feature Product Area =================-->
+    <section class="feature_product_area section_gap">
+        <div class="main_box">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="main_title">
+                        <h2>Search for: {{ query }}</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    {% if products %}
+                        {% for product in products %}
+                            <div class="col col1">
+                                <div class="f_p_item">
+                                    <div class="f_p_img">
+                                        <img class="img-fluid" src="{{ product.image.url }}" alt="">
+                                    </div>
+                                    <a href="#">
+                                        <h4>{{ product.name }}</h4>
+                                    </a>
+                                    <h5>Rs.{{ product.price }}</h5>
+                                    <div class="mt-2">
+                                         <a href="{% url 'shop:detail' product.category product.subcategory product.id %}">
+                                        <button class="btn btn-primary">Add to Cart</button>
+                                    </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Feature Product Area =================-->
+
+{% endblock %}
+{#{% extends 'base.html' %}#}
+{#{% block content %}#}
+{#    {% load staticfiles %}#}
+{#    {% if products %}#}
+{#        {% for product in products %}#}
+{#            {{ product.name }}#}
+{#        {% endfor %}#}
+{#    {% endif %}#}
+{#{% endblock %}#}

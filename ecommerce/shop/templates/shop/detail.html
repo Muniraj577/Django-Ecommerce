@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}Product Detail Page{% endblock %}
+{% load static %}
+{% block content %}
+    <!--================Home Banner Area =================-->
+    <section class="banner_area">
+        <div class="banner_inner d-flex align-items-center">
+            <div class="container">
+                <div class="banner_content text-center">
+                    <h2>Single Product Page</h2>
+                    <div class="page_link">
+                        <a href="{% url 'shop:index' %}">Home</a>
+                        <a href="{% url 'shop:shop' %}">Category</a>
+                        {#                        <a href="{% url 'shop:detail' products.id %}">Product Details</a>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Home Banner Area =================-->
+
+    <!--================Single Product Area =================-->
+    <div class="product_image_area">
+        <div class="container">
+            <div class="row s_product_inner">
+                <div class="col-lg-6">
+                    <div class="s_product_img">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" style="height: 600px; width: 50px" src="{{ product.image.url }}"
+                                     alt=" First slide">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 offset-lg-1">
+                    <div class="s_product_text">
+                        <h3>{{ product.name }}</h3>
+                        <h2>{{ product.price }}</h2>
+                        <ul class="list">
+                            <li>
+                                <a class="active" href="#">
+                                    <span>Category</span> : {{ product.category }}</a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>Stock</span> : {{ product.stock }}</a>
+                            </li>
+                        </ul>
+                        <p>{{ product.description }}</p>
+                        <div class="product_count">
+{#                            <label for="qty">Quantity:</label>#}
+                            {{ item.update_quantity_form.quantity }}
+                            {{ item.update_quantity_form.update }}
+                        </div>
+                        <div class="card_area">
+                            <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                                    {% csrf_token %}
+                                    {{ cart_product_form }}
+                                <button type="submit" class="btn btn-primary">Add to Cart <span><i
+                                        class="lnr lnr-cart"></i></span></button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--================End Single Product Area =================-->
+
+
+{% endblock %}
