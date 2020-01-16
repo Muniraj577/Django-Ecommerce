@@ -26,7 +26,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# DEFAULT_FROM_EMAIL = "munirajrajbanshi5@gmail.com"
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 
 EMAIL_HOST_PASSWORD = 
